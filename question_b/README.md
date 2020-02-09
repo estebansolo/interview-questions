@@ -2,6 +2,10 @@
 
 You can use this tool to compare 2 versions in order to know if is greater, lesser or equal to the other.
 
+## Installation
+
+
+
 ### Usage
 
 - `get_lesser()` function return the lesser version of the provided, if none is lesser, the result is a `None` value.

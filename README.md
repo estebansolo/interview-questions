@@ -35,3 +35,4 @@ We want to optimize every bits of software we write. Your goal is to write a new
 1. Flexible Schema
 1. Cache can expire
 
+[Solution](/question_c)
