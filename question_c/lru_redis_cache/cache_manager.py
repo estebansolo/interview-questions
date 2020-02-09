@@ -1,5 +1,5 @@
 import json
-from lru_cache.redis_manager import RedisManager 
+from lru_redis_cache.redis_manager import RedisManager 
 
 
 class LRUCache:

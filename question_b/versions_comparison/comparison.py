@@ -1,4 +1,5 @@
 import re
+from versions_comparison.decorators import version_compare
 from versions_comparison.exceptions import FormatVersion, StringFormat
 
 class Comparison:
@@ -15,22 +16,18 @@ class Comparison:
         if self.version_one == self.version_two:
             return self._response_format("is equal to")
 
-        elif self.version_one > self.version_two:
+        elif self._greater_than():
             return self._response_format("is greater than")
         
         return self._response_format("is less than")
 
-    def get_greater(self):
-        if self.version_one == self.version_two:
-            return None
-
-        return max(self.version_one, self.version_two)
-        
-    def get_lesser(self):
-        if self.version_one == self.version_two:
-            return None
-        
-        return min(self.version_one, self.version_two)
+    @version_compare
+    def get_greater(self, first_greater=False):
+        return self.version_one if first_greater else self.version_two
+    
+    @version_compare
+    def get_lesser(self, first_greater=False):
+        return self.version_one if not first_greater else self.version_two
     
     def _versions_validate(self):
         if self.version_one.format != self.version_two.format:
@@ -43,7 +40,30 @@ class Comparison:
             self.version_two
         )
 
+    def _greater_than(self):
+        version_format = self.version_one.format
+        if version_format == "dot_numbers":
+            return self._greater_number()
 
+        version_one_len = self.version_one.length()
+        version_two_len = self.version_two.length()
+
+        if version_one_len != version_two_len:
+            return version_one_len > version_two_len
+
+        return str(self.version_one) > str(self.version_two)
+
+    def _greater_number(self):
+        v1_nums = str(self.version_one).split('.')
+        v2_nums = str(self.version_two).split('.')
+
+        for v1, v2 in zip(v1_nums, v2_nums):
+            if int(v1) == int(v2):
+                continue
+            
+            return int(v1) > int(v2)
+
+        return str(self.version_one) > str(self.version_two)
 
 class VersionValidation:
     expressions = {
@@ -56,6 +76,9 @@ class VersionValidation:
         self.format = None
 
         self._validate_format()
+
+    def length(self):
+        return len(self.version)
 
     def _validate_format(self):
         for name, expression in self.expressions.items():
@@ -70,20 +93,12 @@ class VersionValidation:
     def _is_valid_format(expression, string):
         return re.search(expression, string)
 
-    def __lt__(self, version_cls):
-        return self.version < version_cls.version
-
-    def __gt__(self, version_cls):
-        return self.version > version_cls.version
-
-    def __ne__(self, version_cls):
-        return self.version != version_cls.version
-
-    def __eq__(self, version_cls):
-        return self.version == version_cls
+    def __eq__(self, version):
+        return self.version == version
 
     def __str__(self):
         return self.version
-
+        
     def __repr__(self):
         return self.version
+        

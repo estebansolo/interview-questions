@@ -40,6 +40,9 @@ greater_version = [
     ("1.1.7", "1.2.5"),
     ("0.5.9", "0.6.0"),
     ("adf", "AFG"),
+    ("AzA", "aasg"),
+    ("aaaZ", "AAAAz"),
+    ("1.3", "1.21.4"),
 ]
 
 @pytest.mark.parametrize("version_one,version_two", greater_version)

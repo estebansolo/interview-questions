@@ -4,7 +4,7 @@ import pytest
 import fakeredis
 from mock import Mock
 
-from lru_cache import LRUCache
+from lru_redis_cache import LRUCache
 
 
 redis = None
@@ -29,7 +29,7 @@ def test_setter_getter_cache():
     assert cache.get("my_key") == "my_value"
 
 
-def test_lru_cache():
+def test_lru_redis_cache():
     cache = LRUCache(cache_size=2)
     
     redis.flushdb()

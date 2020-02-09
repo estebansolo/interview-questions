@@ -4,10 +4,11 @@ This is a simple Least Recently Used (LRU) Cache with expiration time that use r
 
 ## Installation
 
+`pip install lru-redis-cache`
 
 ## Usage
 
-Import `LRUCache` from the lru_cache module, when creating an instance of this class you could pass:
+Import `LRUCache` from the lru_redis_cache module, when creating an instance of this class you could pass:
 
 - `cache_size`: Max size of the cache, the default value is 10
 - `ttl`: Max time to expire the cache, the default value is 60 seconds
@@ -24,7 +25,7 @@ This class has three public methods to manage the cache:
 - `set_connection(RedisConnection)` this function allows you to set the redis instance to be used.
 
 ```python
-from lru_cache import LRUCache
+from lru_redis_cache import LRUCache
 
 cache = LRUCache(cache_size=5, ttl=60)
 

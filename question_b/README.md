@@ -4,7 +4,7 @@ You can use this tool to compare 2 versions in order to know if is greater, less
 
 ## Installation
 
-
+`pip install version-comparison`
 
 ### Usage
 
